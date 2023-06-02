@@ -1,24 +1,31 @@
 import json
 from abc import ABC, abstractmethod
+
 import requests
 
 
 class Engine(ABC):
-    """Абстрактный класс-родитель для классов HH и SJ"""
+    """
+    Абстрактный класс-родитель для классов HH и SJ
+    """
 
     @abstractmethod
-    def get_request(self, *args, **qwargs):
+    def get_request(self, *args, **kwargs):
         pass
 
 
 class HeadHunterAPI(Engine):
-    """Класс для работы с API сайта headhunter.ru"""
+    """
+    Класс для работы с API сайта headhunter.ru
+    """
+
     URL = 'https://api.hh.ru/vacancies'
 
     @staticmethod
     def get_region_id(region, town=None) -> str:
         """
         Получение ID региона по его названию
+
         :param region: название региона
         :param town: название города
         :return: id региона и id города
@@ -39,6 +46,7 @@ class HeadHunterAPI(Engine):
     def get_request(self, keyword, page, area, per_page=100):
         """
         Отправка запроса на API
+
         :param keyword: ключевое слово (название вакансии)
         :param page: номер страницы
         :param per_page: количество вакансий на одной странице
@@ -62,12 +70,16 @@ class HeadHunterAPI(Engine):
     def get_vacancies(self, keyword: str, pages, area=113) -> list[json]:
         """
         Делает запросы, изменяя номер страницы
+
         :param keyword: ключевое слово (название вакансии)
-        :param area: ID региона из справочника (по умолчанию 113 - Вся Россия) 1716 - Владимирская область, 1 - Москва
-        2019 - Московская область, 2 - Санкт-Петербург
+        :param area: ID региона из справочника (по умолчанию 113 - Вся Россия)
+            1 - Москва,
+            2019 - Московская область,
+            2 - Санкт-Петербург
         :param pages: количество страниц для парсинга
         :return: список с вакансиями на соответствующей странице
         """
+
         # Максимальное количество вакансий для парсинга - 2000
         if pages > 20:
             raise ValueError('Вы превысили максимальное число вакансий, возможных для парсинга по API')
@@ -81,7 +93,9 @@ class HeadHunterAPI(Engine):
 
 
 class SuperJobAPI(Engine):
-    """Класс для работы с сайтом superjob"""
+    """
+    Класс для работы с сайтом superjob
+    """
 
     # токен для работы с superjob
     SUPER_SECRET_KEY = 'v3.r.137470714.2f709c74e49a5c3452e4bc542e76452080aaa3cb' \
@@ -92,6 +106,7 @@ class SuperJobAPI(Engine):
     def get_request(self, keyword, page, region_id, count=100) -> json:
         """
         Метод для отправки запроса на api superjob
+
         :param keyword: ключевое слово (название профессии)
         :param region_id: id региона (города или области) 1-Россия
         :param page: номер страницы
@@ -113,11 +128,13 @@ class SuperJobAPI(Engine):
     def get_vacancies(self, keyword, pages, region_id=1):
         """
         Метод для организации постраничной отправки запроса
+
         :param keyword: ключевое слово
         :param pages: количество страниц (максимальное значение для API - 5 страниц по 100 вакансий)
         :param region_id: id региона
         :return: список вакансий, собранных с сайта superjob по ключевому слову
         """
+
         if pages > 5:
             pages = 5
         vacancies = []

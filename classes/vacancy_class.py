@@ -1,5 +1,8 @@
 class Vacancy:
-    """Класс для определения вакансии"""
+    """
+    Класс для определения вакансии
+    """
+
     __vacancy_id = 0  # счетчик id вакансий
 
     def __init__(self, title, salary_min, salary_max, link, currency, area,
@@ -17,7 +20,10 @@ class Vacancy:
         self.id = Vacancy.__vacancy_id  # id вакансии
 
     def __str__(self) -> str:
-        """Строковое представление вакансии"""
+        """
+        Строковое представление вакансии
+        """
+
         return f'Вакансия в регионе {self.area}: {self.title}\n' \
                f'Зарплата от {self.salary_min} до {self.salary_max} {self.currency}\n' \
                f'Требования к кандидату: {self.requirement}\n' \

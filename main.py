@@ -6,7 +6,7 @@ def user_interaction():
     input('======================= Нажмите Enter чтобы начать ================================\n')
 
     # Запрос платформ для поиска
-    query = input('Введите платформы для поиска вакансий HH - Headhunter, SJ - SuperJob.'
+    query = input('Введите платформы для поиска вакансий HH - Headhunter, SJ - SuperJob.\n'
                   'Для поиска вакансий на двух платформах нажмите Enter -> ')
 
     hh_api, sj_api = choose_platform(query)  # выбор платформы для парсинга
@@ -31,7 +31,7 @@ def user_interaction():
     json_saver.add_vacancies(hh_vacancies, sj_vacancies)  # Добавление вакансий в json файлы (отдельно hh и sj)
     vacancies_classes = json_saver.select()  # Создание списка с экземплярами класса Vacancy
 
-    filter_word = input("Введите ключевое слово для поиска в описании вакансий"
+    filter_word = input("Введите ключевое слово для поиска в описании вакансий\n"
                         "Для пропуска данного фильтра нажмите Enter -> ")  # ключевое слово для поиска
 
     if filter_word:

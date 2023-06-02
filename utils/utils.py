@@ -1,15 +1,17 @@
 from classes import hh_sj_classes
 from classes.hh_sj_classes import HeadHunterAPI, SuperJobAPI
 from classes.json_saver_class import JSONSaver
-from classes.vacansy_class import Vacancy
+from classes.vacancy_class import Vacancy
 
 
 def sort_vacancies(vacancies: list[Vacancy]) -> list[Vacancy]:
     """
     Функция для сортировки списка вакансий по зарплате
+
     :param vacancies: список с экземплярами класса Vacancy
     :return: отсортированный по минимальной зарплате список с экземплярами класса Vacancy
     """
+
     sorted_vacancies = sorted(vacancies)
 
     return sorted_vacancies
@@ -18,10 +20,12 @@ def sort_vacancies(vacancies: list[Vacancy]) -> list[Vacancy]:
 def filter_vacancies(filter_word: str, vacancies: list[Vacancy]) -> list[Vacancy]:
     """
     Поиск вакансий по ключевому слову. Ключевое слово ищется в описании вакансии, или в требованиях к вакансии
+
     :param filter_word: ключевое слово
     :param vacancies: список с экземплярами класса Vacancy
     :return: список с экземплярами класса Vacancy, в описании у которых найдено ключевое слово
     """
+
     filtered_vac = []
     for vacancy in vacancies:
         if filter_word.lower() in vacancy.requirement.lower() or filter_word.lower() in vacancy.responsibility.lower():
@@ -33,31 +37,40 @@ def filter_vacancies(filter_word: str, vacancies: list[Vacancy]) -> list[Vacancy
 def get_top_vacancies(vacancies: list[Vacancy], top_n: int) -> list[Vacancy]:
     """
     Функция для возврата top_n вакансий с самой большой зарплатой
+
     :param vacancies: отсортированный по возрастанию з/п список с экземплярами класса Vacancy
     :param top_n: количество вакансий для вывода
     :return: список с top_n экземплярами класса Vacancy с самой большой зарплатой
     """
+
     return vacancies[-1:-top_n:-1]
 
 
 def get_vacancies_without_experience(vacancies: list[Vacancy]):
-    filtered_vacancies = filter(lambda x: x.experience == 'Нет опыта' or x.experience == 'без опыта'
-                                          or '1' in x.experience, vacancies)
+    filtered_vacancies = filter(lambda x: x.experience == 'Нет опыта' or
+                                          x.experience == 'без опыта' or
+                                          '1' in x.experience,
+                                vacancies)
 
     return list(filtered_vacancies)
 
 
 def print_vacancies(vacancies: list[Vacancy]) -> None:
-    """Функция для вывода в консоль списка вакансий"""
+    """
+    Функция для вывода в консоль списка вакансий
+    """
+
     print(*vacancies, sep='\n++++++++++++++++++++++++++++++++++++++\n')
 
 
 def choose_platform(keyword: str) -> tuple:
     """
     Функция для выбора платформы для парсинга
+
     :param keyword: ключевое слово (hh для Headhunter, sj для Superjob)
     :return: созданные в соответствии с ключевым словом экземпляры классов HH и SJ
     """
+
     # начальные значения для платформ
     hh_api = None
     sj_api = None
@@ -81,12 +94,14 @@ def choose_platform(keyword: str) -> tuple:
 def parse(api_hh: None | HeadHunterAPI, api_sj: None | SuperJobAPI, keyword: str, count: str) -> tuple:
     """
     Функция для отправки запросов на api
+
     :param api_hh: Экземпляр класса HeadHunterAPI или None
     :param api_sj: Экземпляр класс SuperJobAPI или None
     :param keyword: Ключевое слово, по которому будут искаться вакансии
     :param count: Количество страниц с вакансиями (1 страница - 100 вакансий)
     :return: список с экземплярами классов Vacancy для HeadHunterAPI и SuperJobAPI
     """
+
     # если есть экземпляр класса HeadHunterAPI() и нет экземпляра класса SuperJobAPI()
     if api_hh is None:
         hh_vacancies = None  # Вакансии с сайта hh
@@ -108,10 +123,12 @@ def parse(api_hh: None | HeadHunterAPI, api_sj: None | SuperJobAPI, keyword: str
 def user_filter(query, vacancies) -> list[Vacancy]:
     """
     Функция для выбора каким образом отфильтровать вакансии
+
     :param query: Ключ фильтрации
     :param vacancies: список с экземплярами классов Vacancy
     :return: отфильтрованный список с экземплярами классов Vacancy
     """
+
     # Фильтрация по зарплате
     if query == '1':
         salary = input('Введите желаемый уровень оклада в рублях, например 40000-60000, или 80000 -> ')
