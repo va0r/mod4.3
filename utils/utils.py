@@ -49,8 +49,7 @@ def get_top_vacancies(vacancies: list[Vacancy], top_n: int) -> list[Vacancy]:
 def get_vacancies_without_experience(vacancies: list[Vacancy]):
     filtered_vacancies = filter(lambda x: x.experience == 'Нет опыта' or
                                           x.experience == 'без опыта' or
-                                          '1' in x.experience,
-                                vacancies)
+                                          '1' in x.experience, vacancies)
 
     return list(filtered_vacancies)
 
