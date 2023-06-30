@@ -11,7 +11,7 @@ class Vacancy:
         self.salary_min = salary_min  # vacancy['salary']['from']  минимальная планка вакансии
         self.salary_max = salary_max  # vacancy['salary']['to']  максимальная планка вакансии
         self.link = link  # vacancy['alternate_url']  ссылка на вакансию
-        self.currency = currency   # vacancy['salary']['currency']  валюта
+        self.currency = currency  # vacancy['salary']['currency']  валюта
         self.area = area  # vacancy['area']['name']  регион
         self.requirement = requirement  # vacancy['snippet']['requirement']
         self.responsibility = responsibility  # vacancy['snippet']['responsibility']  описание
@@ -55,7 +55,3 @@ class Vacancy:
             return self.salary_min <= other.salary_min
         else:
             return self.salary_min <= other
-
-
-
-
