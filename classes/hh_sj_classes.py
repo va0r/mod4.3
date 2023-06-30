@@ -30,6 +30,7 @@ class HeadHunterAPI(Engine):
         :param town: название города
         :return: id региона и id города
         """
+
         regions_response = requests.get('https://api.hh.ru/areas')
         for r in regions_response.json()[0]['areas']:
             if region.capitalize() in r['name']:
@@ -113,6 +114,7 @@ class SuperJobAPI(Engine):
         :param count: количество вакансий на странице (100 вакансий)
         :return: список вакансий, соответствующих требованиям в формате json
         """
+
         params = {'keyword': keyword,
                   'с': region_id,
                   'sort_new (unixtime)': 1,
@@ -120,7 +122,8 @@ class SuperJobAPI(Engine):
                   'count': count,
                   'no_agreement': 1}
 
-        response = requests.get(self.URL, headers={'X-Api-App-Id': self.SUPER_SECRET_KEY},
+        response = requests.get(self.URL,
+                                headers={'X-Api-App-Id': self.SUPER_SECRET_KEY},
                                 params=params).json()
 
         return response['objects']
